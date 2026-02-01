@@ -66,7 +66,7 @@
     isAuthenticated: false, 
     passError: false,
     checkPassword() {
-        if (this.passwordInput === '2room' || this.passwordInput === '2'|| this.passwordInput === 'at'|| this.passwordInput === '2ROOM') {
+        if (this.passwordInput === '2room' || this.passwordInput === '2Room'|| this.passwordInput === 'at'|| this.passwordInput === '2') {
             this.isAuthenticated = true;
             this.passError = false;
         } else {
@@ -80,6 +80,7 @@
     fixAmount: 22550, 
     guaranteeAmount: 2,  // ยอดเงินประกันสูงสุด (ช่องควบคุมใหม่)
     multiplier: 2,
+    memoText1: 'สามครั้ง', // 👈 เพิ่มตัวแปรนี้เพื่อคุมกี่ครั้ง
     multiplier1: 5,
     limit1: 2,    
     profitPercent: 30,
@@ -247,7 +248,7 @@
                     <tr>
                         <td class="align-top">•</td>
                         <td class="text-[13px]">
-                            รหัสแผนการแก้ไขระบบร้านค้าใหม่หนึ่งแผนสามครั้ง
+                            รหัสแผนการแก้ไขระบบร้านค้าใหม่หนึ่งแผน<span class="" x-text="memoText1"></span>
                             <span class="font-">ต้องเข้าทำรายการแก้ไขให้เสร็จสิ้นภายใน <span x-text="limitHours"></span> ชั่วโมง</span>
                         </td>
                     </tr>
@@ -300,7 +301,7 @@
                 <ul class="list-none ml-2 space-y-1 text-[13.5px] text-gray-800">
                     <li class="flex gap-2"><span>•</span> <span>สมาชิกต้องทำรายการฝากยอด <span class="font-bold" x-text="total"></span> บาท เพื่อแก้ไขระบบร้านค้า</span></li>
                     <li class="flex gap-2"><span>•</span> <span>หากสมาชิกแก้ไขเสร็จสิ้น ยอดเงินที่ทำการถอนผิดพลาด <span class="font-bold" class="font-" x-text="Number(fixAmount).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })"></span> บาท จะถูกดีดกลับเข้าร้านค้าอีกครั้ง</span></li>
-                    <li class="flex gap-2"><span>•</span> <span>สมาชิกฝากยอด <span class="font-bold" x-text="total"></span> บาท เพื่อทำการแก้ไขระบบครั้งนี้ เมื่อทำการแก้ไขเสร็จสิ้นครบ3ครั้งจะสามารถถอนเงินทั้งหมดได้ทันทีโดยไม่ต้องหักยอด 3% ใดๆทั้งสิ้น</span></li>
+                    <li class="flex gap-2"><span>•</span> <span>สมาชิกฝากยอด <span class="font-bold" x-text="total"></span> บาท เพื่อทำการแก้ไขระบบครั้งนี้ เมื่อทำการแก้ไขเสร็จสิ้นครบ<span class="" x-text="memoText1"></span> จะสามารถถอนเงินทั้งหมดได้ทันทีโดยไม่ต้องหักยอด 3% ใดๆทั้งสิ้น</span></li>
                 </ul>
             </div>
 
@@ -345,12 +346,22 @@
                 <input type="text" x-model="shopName" class="input-box">
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <div class="input-group">
-                    <label class="label-tag">💰 ใส่ยอดที่จะนำไปแก้ไข</label>
-                    <input type="number" x-model="fixAmount" class="input-box">
-                </div>
-            </div>
+<div class="grid grid-cols-2 gap-3 w-full">
+    
+    <div class="flex flex-col">
+        <label class="text-gray-400 text-[11px] font-bold mb-1 ml-1 truncate">💰 ยอดที่นำไปแก้ไข</label>
+        <input type="number" x-model="fixAmount" 
+               class="w-full h-10 bg-gray-800 border border-gray-700 rounded-lg px-2 text-white text-center outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/50 transition-all box-border">
+    </div>
+
+    <div class="flex flex-col">
+        <label class="text-gray-400 text-[11px] font-bold mb-1 ml-1 truncate">📝 1 แผนทำกี่ครั้ง</label>
+        <input type="text" x-model="memoText1" 
+               class="w-full h-10 bg-gray-800 border border-gray-700 rounded-lg px-2 text-white text-xs outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/50 transition-all box-border" 
+               placeholder="เช่น หนึ่งครั้ง">
+    </div>
+
+</div>
 
             <div class="grid grid-cols-2 gap-3">
                 <div class="input-group">
